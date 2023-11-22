@@ -1,4 +1,4 @@
 node_modules/
-.parcel.cache/
+.parcel-cache/
 .vscode/
 .DS_Store
