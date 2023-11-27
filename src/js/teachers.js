@@ -17,7 +17,7 @@ function loadAllTeachers(){
         }
 
     }).catch(err =>{
-        alert("Something went wrong, try again!")
+        alert("Something went wrong, try again!");
     })
 }
 
@@ -74,7 +74,7 @@ btnElm.addEventListener('click', () =>{
 
 teacherContainerElm.addEventListener('click', (e) =>{
     if(e.target?.classList.contains('delete')){
-        const teacherId = e.target.closest('tr').id;
+        const teacherId = e.target.closest('tr').children[0].innerText;
 
         fetch(`${API_URL}/teachers/${teacherId}`, {method: 'DELETE'})
         .then(res =>{
