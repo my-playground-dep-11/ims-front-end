@@ -7,26 +7,29 @@
     <link rel="stylesheet" href="/index.0d5f8989.css">
     <script src="/index.34ce65bc.js" defer=""></script>
     <link rel="stylesheet" href="/index.f004ef08.css">
+    <link rel="stylesheet" href="/teachers.34df27b5.css">
     <script src="/teachers.1b195e01.js" defer=""></script>
 </head>
 <body>
     <h1 class="text-center py-2 border-bottom">Manage Teachers</h1>
-    <div class="d-flex">
-        <form class="p-3 w-50" action="javascript:void(0)">
-            <div class="mb-3">
+    <div class="d-flex flex-column">
+        <form class="d-flex justify-content-around p-3 gap-2" action="javascript:void(0)">
+            <div class="mb-3 w-50">
                 <label for="txt-name" class="form-label">NAME</label>
                 <input type="text" class="form-control" id="txt-name" placeholder="">
             </div>
     
-            <div class="mb-3">
+            <div class="mb-3 w-50">
                 <label for="txt-contact" class="form-label">CONTACT</label>
                 <input type="text" class="form-control" id="txt-contact" placeholder="">
             </div>
-            <button id="btn-add" class="btn btn-primary" type="button">ADD</button>
+            <div class="d-flex align-items-center mt-3">
+                <button id="btn-add" class="btn btn-primary" type="button">ADD</button>
+            </div>
         </form>
-        <table class="p-3 table table-bordered w-50">
-            <thead class="">
-                <tr class="">
+        <table class="p-3 table table-bordered table-hover">
+            <thead>
+                <tr>
                     <th>ID</th>
                     <th>NAME</th>
                     <th>ADDRESS</th>
@@ -34,7 +37,7 @@
                 </tr>
             </thead>
     
-            <tbody>
+            <tbody id="teacher-container">
               
             </tbody>
         </table>

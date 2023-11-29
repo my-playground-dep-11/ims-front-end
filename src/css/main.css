@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+    font-family: Ubuntu, system-ui, sans-serif;
+}
+
+.edit:hover{
+    cursor: pointer;
+    color: green;
+    font-size: 1.2rem;
+}
+
+.delete:hover{
+    cursor: pointer;
+    color: red;
+    font-size: 1.2rem;
+}
+
+thead > tr > th{
+    color: darkblue;
+}
