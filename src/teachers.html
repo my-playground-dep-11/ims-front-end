@@ -7,26 +7,29 @@
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script type="module" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/main.css">
     <script type="module" src="js/teachers.js"></script>
 </head>
 <body>
     <h1 class="text-center py-2 border-bottom">Manage Teachers</h1>
-    <div class="d-flex">
-        <form class="p-3 w-50" action="javascript:void(0)">
-            <div class="mb-3">
+    <div class="d-flex flex-column">
+        <form class="d-flex justify-content-around p-3 gap-2" action="javascript:void(0)">
+            <div class="mb-3 w-50">
                 <label for="txt-name" class="form-label">NAME</label>
                 <input type="text" class="form-control" id="txt-name" placeholder="">
             </div>
     
-            <div class="mb-3">
+            <div class="mb-3 w-50">
                 <label for="txt-contact" class="form-label">CONTACT</label>
                 <input type="text" class="form-control" id="txt-contact" placeholder="">
             </div>
-            <button id="btn-add" class="btn btn-primary" type="button">ADD</button>
+            <div class="d-flex align-items-center mt-3">
+                <button id="btn-add" class="btn btn-primary" type="button">ADD</button>
+            </div>
         </form>
-        <table class="p-3 table table-bordered w-50">
-            <thead class="">
-                <tr class="">
+        <table class="p-3 table table-bordered table-hover">
+            <thead>
+                <tr>
                     <th>ID</th>
                     <th>NAME</th>
                     <th>ADDRESS</th>

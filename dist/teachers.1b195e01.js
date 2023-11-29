@@ -600,7 +600,7 @@ function createTeacher(teacher) {
         <td>${teacher.id}</td>
         <td>${name}</td>
         <td>${contact}</td>
-        <td>
+        <td class="d-flex gap-4">
             <i class= "edit bi bi-pencil-fill p-1"></i>
             <i class= "delete bi bi-trash-fill p-1"></i>
         </td>
@@ -649,7 +649,7 @@ btnElm.addEventListener("click", (e)=>{
         })
     }).then((res)=>{
         if (res.ok) {
-            document.querySelectorAll("tr").forEach((tr)=>tr.remove());
+            document.querySelectorAll("tbody tr").forEach((tr)=>tr.remove());
             loadAllTeachers();
             txtNameElm.value = "";
             txtContactElm.value = "";
