@@ -5,6 +5,7 @@ const tbodyElm = document.querySelector('tbody');
 const teacherContainerElm = document.querySelector('#teacher-container');
 const {API_URL} = process.env;
 
+let id = 0;
 
 loadAllTeachers();
 
@@ -22,20 +23,23 @@ function loadAllTeachers(){
 }
 
 function createTeacher(teacher){
+    const name =teacher.name;
+    const contact =teacher.contact;
+    
     const trElm = document.createElement('tr');
     tbodyElm.append(trElm);
     trElm.innerHTML = `
         <td>${teacher.id}</td>
-        <td>${teacher.name}</td>
-        <td>${teacher.contact}</td>
+        <td>${name}</td>
+        <td>${contact}</td>
         <td>
             <i class= "edit bi bi-pencil-fill p-1"></i>
             <i class= "delete bi bi-trash-fill p-1"></i>
         </td>
-    `
+    `;
 }
 
-btnElm.addEventListener('click', () =>{
+btnElm.addEventListener('click', (e) =>{
     const name = txtNameElm.value.trim();
     const contact = txtContactElm.value.trim();
 
@@ -49,27 +53,51 @@ btnElm.addEventListener('click', () =>{
         return;
     }
 
-    fetch(`${API_URL}/teachers`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({name, contact})
-    }).then(res =>{
-        if(res.status === 201){
-            res.json().then(teacher =>{
-                createTeacher(teacher);
-                txtNameElm ='';
-                txtContactElm = '';
+    if(btnElm.innerText === "ADD"){
+        fetch(`${API_URL}/teachers`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({name, contact})
+        }).then(res =>{
+            if(res.ok){
+                res.json().then(teacher =>{
+                    createTeacher(teacher);
+                    txtNameElm.value ="";
+                    txtContactElm.value = "";
+                    txtNameElm.focus();
+                });
+            }else{
+                alert("Failed to create the teacher's record!, try again")
+            }
+        }).catch(err =>{
+            alert("Something went wrong, try again later!")
+        })
+    }else{
+        fetch(`${API_URL}/teachers/${id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({name, contact})
+        }).then(res => {
+            if(res.ok){
+                document.querySelectorAll('tr').forEach(tr => tr.remove());
+                loadAllTeachers();
+                txtNameElm.value ="";
+                txtContactElm.value = "";
                 txtNameElm.focus();
-
-            });
-        }else{
-            alert("Failed to create the teacher's record!, try again")
-        }
-    }).catch(err =>{
-        alert("Something went wrong, try again later!")
-    })
+                btnElm.innerText = "ADD";
+                
+            }else{
+                alert("Failed to update the teacher's record!, try again")
+            }
+        }).catch(err =>{
+            alert("Something went wrong , try again!")
+        });
+    }
+    
 });
 
 teacherContainerElm.addEventListener('click', (e) =>{
@@ -88,6 +116,20 @@ teacherContainerElm.addEventListener('click', (e) =>{
         });
 
     }else if(e.target?.classList.contains('edit')){
-        
+        const teacherId = e.target.closest('tr').children[0].innerText;
+        id = teacherId;
+        fetch(`${API_URL}/teachers/${teacherId}`)
+        .then(res => {
+            if(res.ok){
+                res.json().then(teacher =>{
+                    txtNameElm.value = teacher.name;
+                    txtContactElm.value = teacher.contact;
+                    btnElm.innerText = "UPDATE";
+                })
+                
+            }
+            
+        })
+
     }
 });
