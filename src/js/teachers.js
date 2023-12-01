@@ -9,6 +9,7 @@ let id = 0;
 
 loadAllTeachers();
 
+
 function loadAllTeachers(){
     fetch(`${API_URL}/teachers`).then(res =>{
         if(res.ok){
