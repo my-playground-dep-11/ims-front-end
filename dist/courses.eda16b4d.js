@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"aopfY":[function(require,module,exports) {
+})({"1INQP":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "8dfd3f211b195e01";
+module.bundle.HMR_BUNDLE_ID = "dd808801eda16b4d";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -574,116 +574,73 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"7BApK":[function(require,module,exports) {
+},{}],"dKvZw":[function(require,module,exports) {
 const btnElm = document.querySelector("#btn-add");
 const txtNameElm = document.querySelector("#txt-name");
-const txtContactElm = document.querySelector("#txt-contact");
+const txtDurationElm = document.querySelector("#txt-duration");
 const tbodyElm = document.querySelector("tbody");
-const teacherContainerElm = document.querySelector("#teacher-container");
 const API_URL = "http://localhost:9090";
-let id = 0;
-loadAllTeachers();
-function loadAllTeachers() {
-    fetch(`${API_URL}/teachers`).then((res)=>{
-        if (res.ok) res.json().then((teacherList)=>teacherList.forEach((teacher)=>createTeacher(teacher)));
+loadAllCourses();
+function loadAllCourses() {
+    fetch(`${API_URL}/courses`).then((res)=>{
+        if (res.ok) res.json().then((coursesList)=>coursesList.forEach((course)=>createCourse(course)));
         else alert("Failed to load teachers");
     }).catch((err)=>{
         alert("Something went wrong, try again!");
     });
 }
-function createTeacher(teacher) {
-    const name = teacher.name;
-    const contact = teacher.contact;
+function createCourse(course) {
     const trElm = document.createElement("tr");
     tbodyElm.append(trElm);
     trElm.innerHTML = `
-        <td>${teacher.id}</td>
-        <td>${name}</td>
-        <td>${contact}</td>
-        <td class="d-flex gap-4">
-            <i class= "edit bi bi-pencil-fill p-1"></i>
-            <i class= "delete bi bi-trash-fill p-1"></i>
+        <td>${course.id}</td>
+        <td>${course.name}</td>
+        <td>${course.duration_in_months}</td>
+        <td>
+            <i class="edit bi bi-pencil-fill p-1"></i>
+            <i class="delete bi bi-trash-fill"></i>
         </td>
     `;
 }
-btnElm.addEventListener("click", (e)=>{
+btnElm.addEventListener("click", ()=>{
     const name = txtNameElm.value.trim();
-    const contact = txtContactElm.value.trim();
+    const duration = txtDurationElm.value.trim();
     if (!/^[A-Za-z ]+$/.test(name)) {
         txtNameElm.focus();
         txtNameElm.select();
         return;
-    } else if (!/^\d{3}-\d{7}$/.test(contact)) {
-        txtContactElm.focus();
-        txtContactElm.select();
+    } else if (!/^\d$/.test(duration_in_months)) {
+        txtDurationElm.focus();
+        txtDurationElm.select();
         return;
     }
-    if (btnElm.innerText === "ADD") fetch(`${API_URL}/teachers`, {
+    fetch(`${API_URL}/courses`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
             name,
-            contact
+            duration
         })
     }).then((res)=>{
-        if (res.ok) res.json().then((teacher)=>{
+        if (res.status === 201) res.json().then((teacher)=>{
             createTeacher(teacher);
-            txtNameElm.value = "";
-            txtContactElm.value = "";
+            txtNameElm = "";
+            txtDurationElm = "";
             txtNameElm.focus();
         });
         else alert("Failed to create the teacher's record!, try again");
     }).catch((err)=>{
         alert("Something went wrong, try again later!");
     });
-    else fetch(`${API_URL}/teachers/${id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name,
-            contact
-        })
-    }).then((res)=>{
-        if (res.ok) {
-            document.querySelectorAll("tbody tr").forEach((tr)=>tr.remove());
-            loadAllTeachers();
-            txtNameElm.value = "";
-            txtContactElm.value = "";
-            txtNameElm.focus();
-            btnElm.innerText = "ADD";
-        } else alert("Failed to update the teacher's record!, try again");
-    }).catch((err)=>{
-        alert("Something went wrong , try again!");
-    });
 });
-teacherContainerElm.addEventListener("click", (e)=>{
+tbodyElm.addEventListener("click", (e)=>{
     if (e.target?.classList.contains("delete")) {
-        const teacherId = e.target.closest("tr").children[0].innerText;
-        fetch(`${API_URL}/teachers/${teacherId}`, {
-            method: "DELETE"
-        }).then((res)=>{
-            if (res.ok) e.target.closest("tr").remove();
-            else alert("Failed to delete the teacher");
-        }).catch((err)=>{
-            alert("Something went wrong. try again later!");
-        });
-    } else if (e.target?.classList.contains("edit")) {
-        const teacherId = e.target.closest("tr").children[0].innerText;
-        id = teacherId;
-        fetch(`${API_URL}/teachers/${teacherId}`).then((res)=>{
-            if (res.ok) res.json().then((teacher)=>{
-                txtNameElm.value = teacher.name;
-                txtContactElm.value = teacher.contact;
-                btnElm.innerText = "UPDATE";
-            });
-        });
+        const courseId = e.target.closest("tr").id;
     }
 });
 
-},{}]},["aopfY","7BApK"], "7BApK", "parcelRequire1de0")
+},{}]},["1INQP","dKvZw"], "dKvZw", "parcelRequire1de0")
 
-//# sourceMappingURL=teachers.1b195e01.js.map
+//# sourceMappingURL=courses.eda16b4d.js.map
